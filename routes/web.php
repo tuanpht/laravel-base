@@ -12,5 +12,5 @@
 */
 
 Route::namespace('Web')->group(function () {
-        Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
 });

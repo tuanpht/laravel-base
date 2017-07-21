@@ -3,7 +3,6 @@ namespace App\Models\Traits;
 
 use App\Services\Api\Pagination\ApiPaginator;
 use App\Services\Api\Values\ApiParam;
-use App\Models\Filters\FilterInterface;
 
 trait ApiScopes
 {
@@ -20,14 +19,5 @@ trait ApiScopes
             ->appends($apiParam->getRequestParams());
 
         return ApiPaginator::newFromPaginator($originalPaginator);
-    }
-
-    public function scopeFilter($query, FilterInterface $filters = null)
-    {
-        if ($filters) {
-            return $filters->apply($query);
-        }
-
-        return $query;
     }
 }

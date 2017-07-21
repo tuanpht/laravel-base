@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Api\Pagination;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorContract;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\Api\Values\ApiParam;
 
@@ -11,7 +12,7 @@ class ApiPaginator extends LengthAwarePaginator
      *
      * @return ApiPaginator
      */
-    public static function newFromPaginator(LengthAwarePaginator $paginator)
+    public static function newFromPaginator(LengthAwarePaginatorContract $paginator)
     {
         return new ApiPaginator(
             $paginator->items,

@@ -5,40 +5,49 @@ namespace App\Services\Api;
 use App\Services\Api\Contracts\BaseServiceInterface;
 use App\Services\Api\Contracts\CanSortAndFilter;
 use App\Services\Api\Values\ApiParam;
-use App\Models\Filters\FilterInterface;
+use App\Services\Traits\EloquentFilter;
 
 abstract class BaseService implements BaseServiceInterface, CanSortAndFilter
 {
+    use EloquentFilter;
+
     /**
      * @var Eloquent model
      */
     protected $model;
 
-    public function getList(ApiParam $param, FilterInterface $filter = null)
+    public function getList(ApiParam $param)
     {
+        $query = $this->applyFilters($this->model, $param->toArray());
+
         return [
-            'http_status' => 200,
+            'status_code' => 200,
             'is_error' => false,
-            'data' => $this->model->filter($filter)->apiPaginate($param),
+            'message' => '',
+            'data' => $query->apiPaginate($param),
         ];
     }
 
     public function getDetail($id)
     {
         return [
-            'http_status' => 200,
+            'status_code' => 200,
             'is_error' => false,
+            'message' => '',
             'data' => $this->model->find($id),
         ];
     }
 
     public function getSortable()
     {
-        return $this->model->getFillable() ?: ['*'];
+        $fields = $this->model->getFillable() ?: [];
+        $fields[] = $this->model->getKeyName();
+
+        return $fields;
     }
 
     public function getFilterable()
     {
-        return $this->model->getFillable() ?: ['*'];
+        return $this->model->getFillable() ?: [];
     }
 }

@@ -19,6 +19,8 @@ class UsersController extends BaseController
 
     public function __construct(UserServiceInterface $service)
     {
+        parent::__construct();
+
         $this->service = $service;
     }
 
