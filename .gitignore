@@ -12,3 +12,7 @@ yarn-error.log
 .env
 .DS_Store
 composer.lock
+/public/assets
+/public/apidoc
+/apidoc
+apidoc.json
