@@ -1,11 +1,6 @@
 <?php
 
-function has_errors($fields, $errors)
+function has_errors($fields, $errors, $errorCssClass = 'has-error', $noErrorCssClass = '')
 {
-    foreach ($fields as $field) {
-        if ($errors->has($field)) {
-            return true;
-        }
-    }
-    return false;
+    return $errors->has($fields) ? $errorCssClass : $noErrorCssClass;
 }

@@ -8,8 +8,8 @@ use App;
 class ServicesBindingProvider extends ServiceProvider
 {
     protected $services = [
-        App\Services\Api\Contracts\UserServiceInterface::class => App\Services\Api\UserService::class,
-        App\Services\Web\Contracts\UserServiceInterface::class => App\Services\Web\UserService::class,
+        \App\Services\Api\Contracts\UserServiceInterface::class => \App\Services\Api\UserService::class,
+        \App\Services\Web\Contracts\UserServiceInterface::class => \App\Services\Web\UserService::class,
     ];
 
     /**

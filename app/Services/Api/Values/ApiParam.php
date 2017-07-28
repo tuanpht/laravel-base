@@ -25,7 +25,7 @@ class ApiParam
         if ($pageSize > 0) {
             $this->pageSize = $pageSize;
         } else {
-            $this->pageSize = config('api.per_page');
+            $this->pageSize = $this->getDefaultPageSize();
         }
 
         $this->requestParams = $requestParams;
@@ -40,12 +40,22 @@ class ApiParam
         $this->parseParams();
     }
 
+    protected function getMaxPageSize()
+    {
+        return config('api.max_per_page');
+    }
+
+    protected function getDefaultPageSize()
+    {
+        return config('api.per_page');
+    }
+
     protected function parseParams()
     {
-        $sortableFields = $this->sortAndFilterClass->getFilterable();
-        $filterableFields = $this->sortAndFilterClass->getSortable();
+        $sortableFields = $this->sortAndFilterClass->getSortable();
+        $filterableFields = $this->sortAndFilterClass->getFilterable();
 
-        $maxPageSize = config('api.max_per_page');
+        $maxPageSize = $this->getMaxPageSize();
 
         foreach ($this->requestParams as $key => $value) {
             if (!$value) {
@@ -55,14 +65,14 @@ class ApiParam
             switch ($key) {
                 case 'page':
                     $value = intval($value);
-                    if ($value) {
+                    if ($value && $value > 0) {
                         $this->page = $value;
                     }
                     break;
 
                 case 'page_size':
                     $value = intval($value);
-                    if ($value) {
+                    if ($value && $value > 0) {
                         $this->pageSize = ($maxPageSize && $value > $maxPageSize) ? $maxPageSize : $value;
                     }
                     break;
