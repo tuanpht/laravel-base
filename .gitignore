@@ -16,3 +16,6 @@ composer.lock
 /public/apidoc
 /apidoc
 apidoc.json
+.phpunit.result.cache
+/.vscode
+/nbproject
