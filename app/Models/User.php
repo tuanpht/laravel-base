@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Traits\ApiScopes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Authenticatable
+/**
+ * Extends @see Illuminate\Foundation\Auth\User
+ */
+class User extends BaseModel implements
+    AuthenticatableContract,
+    AuthorizableContract,
+    CanResetPasswordContract
 {
-    use Notifiable;
-    use ApiScopes;
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,15 +41,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function hasDefinePrivilege($permission)
+    public function canAccessAdmin()
     {
-        //TODO: check role
-        return false;
-    }
-
-    public function isAccessAdmin()
-    {
-        //TODO: check admin
+        // TODO: check admin
         return false;
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Mail\User;
 
 use App\Mail\BaseMail;
-use App\Services\Helpers\EmailService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services\Web;
+namespace App\Services\Web\Eloquent;
 
-use App\Services\Web\Contracts\UserServiceInterface;
 use App\Models\User;
 
-class UserService extends BaseService implements UserServiceInterface
+class UserService extends BaseService
 {
     public function __construct(User $model)
     {
-        $this->model = $model;
+        $this->userModel = $model;
     }
 
     /**
@@ -19,7 +18,7 @@ class UserService extends BaseService implements UserServiceInterface
      */
     public function create(array $inputs)
     {
-        return $this->model->create($inputs);
+        return $this->userModel->create($inputs);
     }
 
     /**

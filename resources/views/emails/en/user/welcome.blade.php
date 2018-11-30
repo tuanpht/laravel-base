@@ -7,6 +7,3 @@
 @section('text')
     Welcome user {{ $user->email }}
 @endsection
-@section('raw')
-    Welcome user {{ $user->email }}
-@endsection
