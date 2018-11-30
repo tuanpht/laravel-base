@@ -13,4 +13,14 @@ class BaseController extends Controller
     {
         $this->viewData = [];
     }
+
+    public function redirectToAction($action, $params = null, $controller = null)
+    {
+        $controller = $controller ?? '\\' . static::class;
+        if ($params) {
+            return redirect()->action("$controller@$action", $params);
+        }
+
+        return redirect()->action("$controller@$action");
+    }
 }

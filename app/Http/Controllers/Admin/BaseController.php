@@ -13,9 +13,4 @@ class BaseController extends Controller
     {
         $this->viewData = [];
     }
-
-    public function checkPermission($permission, $msg = null)
-    {
-        return abort_if(Gate::denies('permission', $permission), 403, $msg);
-    }
 }

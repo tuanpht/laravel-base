@@ -33,4 +33,11 @@
             <property name="spacingBeforeFirst" value="0" />
         </properties>
     </rule>
+    <rule ref="Generic.Formatting.SpaceAfterCast" />
+    <rule ref="Generic.Metrics.NestingLevel">
+        <properties>
+            <property name="nestingLevel" value="3" />
+            <property name="absoluteNestingLevel" value="4" />
+        </properties>
+    </rule>
 </ruleset>

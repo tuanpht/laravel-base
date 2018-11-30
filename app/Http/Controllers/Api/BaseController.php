@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\Api\Pagination\ApiPaginator;
+use Illuminate\Http\Response;
 
 /**
+ * Demo api doc with http://apidocjs.com/
+ *
  * @apiDefine RequireAuthHeader
  *
  * @apiHeader {String} Authorization Authorization Bearer token after login
@@ -17,44 +19,28 @@ use App\Services\Api\Pagination\ApiPaginator;
 
 class BaseController extends Controller
 {
-    public function __construct()
-    {
-    }
-
-    public function responseErrors($returnCode, $message, $statusCode = 200)
-    {
-        return api_errors($returnCode, $message, $statusCode);
-    }
-
-    public function responseSuccess($data, $statusCode = 200)
-    {
-        return api_success($data, $statusCode);
-    }
-
-    public function responseFromService($serviceResults, $dataName = 'data')
-    {
-        $data = $serviceResults['data'];
-        $statusCode = $serviceResults['status_code'];
-
-        if ($data instanceof ApiPaginator) {
-            $data = $data->toArray();
+    protected function responseError(
+        $errorCode = null,
+        $errors = [],
+        $statusCode = Response::HTTP_UNPROCESSABLE_ENTITY
+    ) {
+        if (is_string($errors)) {
+            $errors = ['message' => $errors];
         }
 
-        if ($serviceResults['is_error']) {
-            return $this->responseErrors(
-                $statusCode,
-                $serviceResults['message'],
-                $statusCode
-            );
-        }
+        return response()->json([
+            'code' => $errorCode,
+            'errors' => $errors,
+        ], $statusCode);
+    }
 
-        if (!isset($data['results'])) {
-            $data = ['results' => $data];
-        }
+    protected function responseStoreSuccess($data = null)
+    {
+        return response()->json($data, Response::HTTP_CREATED);
+    }
 
-        return $this->responseSuccess([
-            $dataName => $data,
-            'code' => $statusCode,
-        ]);
+    protected function responseUpdateSuccess($data = null)
+    {
+        return response()->json($data, Response::HTTP_OK);
     }
 }
