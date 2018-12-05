@@ -6,13 +6,21 @@ use App\Services\Api\Contracts\CanSortAndFilter;
 class ApiParam
 {
     protected $requestUrl;
+
     protected $fullRequestUrl;
+
     protected $requestParams;
+
     protected $page = 1;
+
     protected $pageSize;
+
     protected $orders = [];
+
     protected $filters = [];
+
     protected $ids = [];
+
     protected $sortAndFilterClass;
 
     public function __construct(

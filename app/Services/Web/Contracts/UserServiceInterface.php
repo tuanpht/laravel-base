@@ -11,7 +11,6 @@ interface UserServiceInterface extends BaseServiceInterface
      */
     public function create(array $inputs);
 
-
     /**
      * @param \App\Models\User $user
      * @param array $inputs Associative array [name]

@@ -14,6 +14,7 @@ class EmailService
             ->bcc($bcc)
             ->send($mail);
     }
+
     public static function getLayoutPath($layout)
     {
         $lang = config('app.locale');
