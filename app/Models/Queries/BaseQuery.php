@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Models\Queries;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-trait EloquentFilter
+abstract class BaseQuery
 {
+    protected $filterable;
+
+    protected $sortable;
+
+    protected $model;
+
+    public function __construct($model)
+    {
+        $this->model = $model;
+    }
+
     /**
      * @param Builder|Model $query
      * @param array $params
      *
-     * @return Builder
+     * @return Builder|Model
      */
-    public function scopeApplyFilters($query, array $params = [])
+    public function applyFilters($query, array $params = [])
     {
         if (!$params) {
             return $query;
@@ -33,7 +44,10 @@ trait EloquentFilter
 
             $filter = $filterable[$field];
             if (method_exists($this, $filter)) {
-                $queries[] = call_user_func([$this, $filter], clone $query, $value);
+                $filteredQuery = call_user_func([$this, $filter], clone $query, $value);
+                if ($filteredQuery) {
+                    $queries[] = $filteredQuery;
+                }
             } elseif (is_string($filter)) {
                 $defaultFilters[$field] = $value;
             }
@@ -53,5 +67,24 @@ trait EloquentFilter
         }
 
         return $newQuery;
+    }
+
+    public function filterByKeyword($query, $options)
+    {
+        $keyword = trim($options['keyword']);
+        if (!$keyword) {
+            return false;
+        }
+
+        $searchColumns = $options['search_columns'] ?? [];
+        if (mb_strpos($keyword, '%') === false) {
+            $keyword = "%$keyword%";
+        }
+
+        return $query->where(function ($currentQuery) use ($keyword, $searchColumns) {
+            foreach ($searchColumns as $col) {
+                $currentQuery->orWhere($col, 'like', $keyword);
+            }
+        });
     }
 }

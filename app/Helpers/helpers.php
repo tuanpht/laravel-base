@@ -10,7 +10,7 @@ if (!function_exists('has_error')) {
      * @param string $errorCssClass   Css class when field has error
      * @param string $noErrorCssClass Css class when field has no error
      *
-     * @return boolean
+     * @return string
      */
     function has_error($fields, $errors, $errorCssClass = 'has-error', $noErrorCssClass = '')
     {
@@ -24,7 +24,7 @@ if (!function_exists('mix_asset')) {
      *
      * @param string $assetPath Relative path in public/assets folder
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString|string
      */
     function mix_asset($assetPath)
     {

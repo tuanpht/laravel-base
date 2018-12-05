@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Models\Queries;
 
-trait PostFilters
+class PostQueries extends BaseQuery
 {
     protected $filterable = [
         'published' => 'filterByPublished',
@@ -11,7 +11,7 @@ trait PostFilters
     public function filterByPublished($query, $published)
     {
         if ($published === '' || $published === null) {
-            return $query;
+            return false;
         }
 
         return $query->where('published', (bool) $published);

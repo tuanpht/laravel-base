@@ -61,7 +61,7 @@ return [
         ],
 
         'papertrail' => [
-            'driver'  => 'monolog',
+            'driver' => 'monolog',
             'level' => 'debug',
             'handler' => SyslogUdpHandler::class,
             'handler_with' => [
@@ -86,6 +86,16 @@ return [
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => 'debug',
+        ],
+
+        'unit_test' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/unit_test.log'),
+        ],
+
+        'queries' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/queries.log'),
         ],
     ],
 

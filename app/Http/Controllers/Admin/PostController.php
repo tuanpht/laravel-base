@@ -4,19 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Services\PostService;
 
 class PostController extends BaseController
 {
+    protected $postService;
+
+    public function __construct(PostService $postService)
+    {
+        parent::__construct();
+        $this->postService = $postService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $this->viewData['posts'] = Post::applyFilters([
+        $this->viewData['posts'] = $this->postService->get([
             'published' => $request->input('published'),
-        ])->paginate(10);
+            'paging' => false,
+            'page_size' => 10,
+        ]);
 
         return view('admin/posts/index', $this->viewData);
     }

@@ -10,6 +10,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+.env.testing
 .DS_Store
 composer.lock
 /public/assets
@@ -19,3 +20,4 @@ apidoc.json
 .phpunit.result.cache
 /.vscode
 /nbproject
+/.framgia-ci-reports
