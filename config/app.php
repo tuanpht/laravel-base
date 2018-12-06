@@ -41,6 +41,12 @@ return [
     'debug' => env('APP_DEBUG', false),
 
     /*
+     | Log queries to log file storage/queries.log
+     |
+     */
+    'debug_log_queries' => env('DEBUG_LOG_QUERIES', false),
+
+    /*
     |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------

@@ -15,6 +15,7 @@ class BaseMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $data = [];
+
     protected $viewName;
 
     /**
