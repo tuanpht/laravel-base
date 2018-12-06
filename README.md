@@ -63,7 +63,9 @@ We follow [Framgia PHP Convention](https://github.com/framgia/coding-standards/b
 
 # PHPUnit
 Before running unit test, please make file `.env.testing`
-- `cp .env.testing.example .env.testing`
+```sh
+cp .env.testing.example .env.testing
+```
 
 And setup database connection if needed.
 
@@ -71,3 +73,41 @@ Running unit test:
 - `composer test` for all tests in folder [tests/](./tests/)
 - `composer test tests/Unit/ExampleTest.php` to test specific file
 - `composer test-coverage` to test and generate coverage reports in folder _tests/coverage/_
+
+# Docker
+If you want to use docker, simple copy file `docker-compose.yml.example` to file `docker-compose.yml` and change the container prefix name `project_` in file `docker-compose.yml`.
+```sh
+cp docker-compose.yml.example docker-compose.yml
+```
+Update `docker-compose.yml`:
+```diff
+# docker-compose.yml
+services:
+    application:
+-        container_name: project_application
++        container_name: myapp_application
+        image: debian
+```
+Up and running:
+```sh
+sudo docker-compose up -d
+```
+Your app will be available at http://localhost:8000 by default.
+
+Update `.env`, e.g.
+```env
+DB_HOST=mysql
+REDIS_HOST=redis
+```
+
+Update `.env.testing`, e.g.
+```env
+DB_HOST=mysql
+```
+
+To run artisan command, enter the workspace container:
+```
+sudo docker exec -it project_workspace bash
+```
+
+More info: https://github.com/FramgiaDockerTeam/laravel-microservices
