@@ -22,3 +22,4 @@ apidoc.json
 /nbproject
 /tests/coverage
 config/debugbar.php
+docker-compose.yml
