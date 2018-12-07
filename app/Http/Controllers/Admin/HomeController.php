@@ -10,9 +10,8 @@ class HomeController extends BaseController
 
         $this->viewData['title'] = trans('home.title');
     }
-
     public function index()
     {
-        return view('admin.welcome', $this->viewData);
+        return view('admin.welcome',$this->viewData);
     }
 }

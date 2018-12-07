@@ -68,10 +68,10 @@ test:
 #       branch: master
 #     commands:
 #       - php rocketeer.phar deploy --on=production --stage=production --no-interaction
-cache:
-  composer:
-    folder: vendor
-    file: composer.lock
+# cache:
+  # composer:
+  #   folder: vendor
+  #   file: composer.lock
   # nodejs:
   #   folder: node_modules
   #   file: yarn.lock
