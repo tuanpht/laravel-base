@@ -111,3 +111,18 @@ sudo docker exec -it project_workspace bash
 ```
 
 More info: https://github.com/FramgiaDockerTeam/laravel-microservices
+
+# Framgia CI
+To apply Framgia CI, you can using git cherry-pick to apply ci config from [dedicated branch](https://github.com/framgia/laravel-base/tree/framgia_civ3_config).
+
+For Framgia CI version 2:
+```sh
+git cherry-pick framgia_civ2_config
+```
+
+Or Framgia CI version 3:
+```sh
+git cherry-pick framgia_civ3_config
+```
+
+And follow CI service document at: https://github.com/framgiaci/documents/
