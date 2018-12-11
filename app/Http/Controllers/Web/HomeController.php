@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Mail\User\WelcomeMail;
 use App\Models\User;
-use App\Services\Helpers\EmailService;
 
 class HomeController extends BaseController
 {

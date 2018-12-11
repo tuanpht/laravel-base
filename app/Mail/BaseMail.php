@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Services\Helpers\EmailService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -18,15 +17,9 @@ class BaseMail extends Mailable
 
     protected $viewName;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $data = [];
-        $this->data = array_merge($this->data, $data);
+        //
     }
 
     /**
@@ -36,16 +29,19 @@ class BaseMail extends Mailable
      */
     public function build()
     {
-        $viewPath = EmailService::getLayoutPath($this->viewName);
+        $viewPath = $this->getLayoutPath($this->viewName);
 
-        if (View::exists($viewPath)) {
-            $view = View::make($viewPath, $this->data)->renderSections();
-            $subject = trim($view['subject']);
-            $html = (!isset($view['html']) || trim($view['html']) == false) ? null : new HtmlString($view['html']);
-            $text = (!isset($view['text']) || trim($view['text']) == false) ? null : new HtmlString($view['text']);
-            $raw = (!isset($view['raw']) || trim($view['raw']) == false) ? null : $view['raw'];
+        $view = View::make($viewPath, $this->data)->renderSections();
+        $subject = trim($view['subject']);
+        $html = (!isset($view['html']) || !trim($view['html'])) ? null : new HtmlString($view['html']);
+        $text = (!isset($view['text']) || !trim($view['text'])) ? null : new HtmlString($view['text']);
+        $raw = (!isset($view['raw']) || !trim($view['raw'])) ? null : $view['raw'];
 
-            return $this->subject($subject)->view(compact('html', 'text', 'raw'));
-        }
+        return $this->subject($subject)->view(compact('html', 'text', 'raw'));
+    }
+
+    private function getLayoutPath($layout)
+    {
+        return 'emails.' . config('app.locale') . '.' . $layout;
     }
 }

@@ -13,10 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 Route::group(['namespace' => 'Api'], function () {
-    Route::post('user/register', 'UsersController@register');
-
-    Route::group(['middleware' => ['api']], function () {
-        Route::put('user/me', 'UsersController@updateProfile');
-        Route::get('user/me', 'UsersController@getCurrentUser');
-    });
+    //
 });

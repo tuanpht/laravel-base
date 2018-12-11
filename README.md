@@ -109,6 +109,10 @@ To run artisan command, enter the workspace container:
 ```
 sudo docker exec -it project_workspace bash
 ```
+Or if you in project root folder, you can enter container with docker-compose:
+```
+sudo docker-compose exec workspace bash
+```
 
 More info: https://github.com/FramgiaDockerTeam/laravel-microservices
 
