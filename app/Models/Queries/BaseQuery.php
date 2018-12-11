@@ -11,13 +11,6 @@ abstract class BaseQuery
 
     protected $sortable;
 
-    protected $model;
-
-    public function __construct($model)
-    {
-        $this->model = $model;
-    }
-
     /**
      * @param Builder|Model $query
      * @param array $params
@@ -26,22 +19,17 @@ abstract class BaseQuery
      */
     public function applyFilters($query, array $params = [])
     {
-        if (!$params) {
+        if (!$params || !$this->filterable) {
             return $query;
         }
 
-        // Default filter by all fillable fields
-        $filterable = isset($this->filterable) ?
-            $this->filterable :
-            array_combine($this->fillable, $this->fillable);
-
         $filteredQueries = [];
         foreach ($params as $field => $value) {
-            if (empty($filterable[$field])) {
+            if (empty($this->filterable[$field])) {
                 continue;
             }
 
-            $filter = $filterable[$field];
+            $filter = $this->filterable[$field];
             if (method_exists($this, $filter)) {
                 $filteredQuery = call_user_func([$this, $filter], clone $query, $value);
                 if ($filteredQuery) {
@@ -54,7 +42,7 @@ abstract class BaseQuery
 
         $newQuery = clone $query;
         if ($filteredQueries) {
-            $newQuery->where(function ($curentQuery) use ($defaultFilters, $filteredQueries) {
+            $newQuery->where(function ($curentQuery) use ($filteredQueries) {
                 foreach ($filteredQueries as $q) {
                     $curentQuery->addNestedWhereQuery($q->getQuery());
                 }

@@ -2,13 +2,13 @@
 
 namespace App\Models\Queries;
 
-class UsersQueries extends BaseQuery
+class UserQueries extends BaseQuery
 {
     protected $filterable = [
         'published' => 'filterByPublished',
     ];
 
-    public function filterByPublished($query, $published)
+    protected function filterByPublished($query, $published)
     {
         if ($published === '' || $published === null) {
             return false;

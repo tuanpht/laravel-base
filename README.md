@@ -92,7 +92,6 @@ Up and running:
 ```sh
 sudo docker-compose up -d
 ```
-Your app will be available at http://localhost:8000 by default.
 
 Update `.env`, e.g.
 ```env
@@ -115,6 +114,29 @@ sudo docker-compose exec workspace bash
 ```
 
 More info: https://github.com/FramgiaDockerTeam/laravel-microservices
+
+Another steps before start:
+```
+sudo docker-compose exec workspace bash
+composer install
+php artisan key:generate
+yarn install
+yarn dev
+```
+
+Your app will be available at http://localhost:8000 by default.
+
+To setup virtual host in host machine, e.g. `http://fanmo.local`:
+```conf
+# fanmo.local.conf
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ServerName fanmo.local
+    ProxyPass / http://localhost:8000/
+    ProxyPassReverse / http://localhost:8000/
+</VirtualHost>
+```
 
 # Framgia CI
 To apply Framgia CI, you can using git cherry-pick to apply ci config from [dedicated branch](https://github.com/framgia/laravel-base/tree/framgia_civ3_config).

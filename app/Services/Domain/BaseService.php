@@ -6,14 +6,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class BaseService
 {
+    protected function find($model, $key)
+    {
+        return $model->findOrFail($key);
+    }
+
     protected function getModels($query, $params)
     {
-        if (isset($params['orderBy'])) {
-            $orders = explode('.', $orderBy);
-            $query->orderBy($orders[0], $orders[1]);
+        if (isset($params['orders'])) {
+            $orders = $params['orders'];
+            $query->orderBy($orders[0], $orders[1] ?? 'asc');
         }
 
-        if (isset($params['limit']) && $params['limit']) {
+        if (isset($params['limit'])) {
             return $query->paginate($params['limit']);
         }
 
